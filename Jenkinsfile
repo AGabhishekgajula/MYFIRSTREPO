@@ -4,33 +4,28 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Cloning the GitHub repository
                 git branch: 'main', url: 'https://github.com/AGabhishekgajula/MYFIRSTREPO.git'
             }
         }
 
         stage('Build') {
             steps {
-                // Placeholder for build commands
                 echo 'Building the project...'
-                // If you had a build step, e.g., npm install, you would put it here
-                // sh 'npm install'
+                // Example command to build the project and generate HTML reports
+                sh 'npm install' // Modify as needed
+                sh 'npm run build' // This should generate the reports
             }
         }
 
-        stage('Test') {
+        stage('Publish HTML Report') {
             steps {
-                // Placeholder for running tests
-                echo 'Running tests...'
-                // Add commands to run tests, e.g., sh 'npm test' for JavaScript projects
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Placeholder for deployment steps
-                echo 'Deploying the project...'
-                // This could be deployment to a server or cloud platform
+                // Publish the HTML reports
+                publishHTML(target: [
+                    reportName: 'Registration Form Report',
+                    reportDir: 'path/to/html/reports', // Adjust to your report directory
+                    reportFiles: 'index.html', // Main HTML file for the report
+                    alwaysPublish: true // Always publish the report
+                ])
             }
         }
     }
