@@ -10,21 +10,18 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Your build commands here
                 echo 'Building the project...'
+                // Your build commands here
                 // Example: sh 'npm install' or any command to generate HTML files
             }
         }
 
         stage('Publish HTML') {
             steps {
-                // Publish HTML reports
                 publishHTML(target: [
                     reportName: 'Registration Form Report',
-                    reportDir: 'build/html', // The directory containing the HTML files
-                    reportFiles: 'index.html', // The main HTML file
-                    alwaysLinkToLastBuild: true,
-                    alwaysPublish: true
+                    reportDir: 'build/html', // Directory containing the HTML files
+                    reportFiles: 'index.html' // The main HTML file
                 ])
             }
         }
