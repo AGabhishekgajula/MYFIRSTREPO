@@ -13,9 +13,9 @@ pipeline {
                 script {
                     if (fileExists('myfirstrepo.html')) {
                         echo "HTML File Contents:"
-                        sh 'cat index.html'
+                        sh 'cat myfirstrepo.html'
                     } else {
-                        echo "index.html file not found."
+                        echo "myfirstrepo.html file not found."
                     }
                 }
             }
@@ -30,14 +30,6 @@ pipeline {
                     reportDir: '.',
                     reportFiles: 'myfirstrepo.html',
                     reportName: 'HTML Report'
-                ])
-            }
-        }
-    }
-}
-// Adjust to your report directory
-                    reportFiles: 'myfirstrepo.html', // Main HTML file for the report
-                    alwaysPublish: true // Always publish the report
                 ])
             }
         }
