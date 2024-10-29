@@ -1,29 +1,42 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/AGabhishekgajula/MYFIRSTREPO.git'
+                // Clone the repository
+                git 'https://github.com/AGabhishekgajula/MYFIRSTREPO.git'
             }
         }
-
-        stage('Build') {
+        stage('Display HTML') {
             steps {
-                echo 'Building the project...'
-                // Example command to build the project and generate HTML reports
-                sh 'npm install' // Modify as needed
-                sh 'npm run build' // This should generate the reports
+                // Display the contents of index.html
+                script {
+                    if (fileExists('myfirstrepo.html')) {
+                        echo "HTML File Contents:"
+                        sh 'cat index.html'
+                    } else {
+                        echo "index.html file not found."
+                    }
+                }
             }
         }
-
         stage('Publish HTML Report') {
             steps {
-                // Publish the HTML reports
+                // Archive and publish HTML report (requires HTML Publisher Plugin)
                 publishHTML(target: [
-                    reportName: 'Registration Form Report',
-                    reportDir: 'path/to/html/reports', // Adjust to your report directory
-                    reportFiles: 'index.html', // Main HTML file for the report
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: '.',
+                    reportFiles: 'myfirstrepo.html',
+                    reportName: 'HTML Report'
+                ])
+            }
+        }
+    }
+}
+// Adjust to your report directory
+                    reportFiles: 'myfirstrepo.html', // Main HTML file for the report
                     alwaysPublish: true // Always publish the report
                 ])
             }
